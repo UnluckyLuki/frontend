@@ -4,13 +4,13 @@
   <div class="card mb-4">
     <div class="card-header">Add New Phone</div>
     <div class="card-body">
-      <form id="createPhoneForm">
+      <form id="createPhoneForm" (ngSubmit)="addPhone()">
         <div class="row g-3">
           <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Phone Number" id="phoneNumber" required>
+            <input type="text" [(ngModel)]="phone.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" id="phoneNumber" required>
           </div>
           <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Phone Name" id="phoneName" required>
+            <input type="text" [(ngModel)]="phone.phoneName" name="phoneName" class="form-control" placeholder="Phone Number" id="phoneName" required>
           </div>
           <div class="col-md-4">
             <button type="submit" class="btn btn-primary w-100">Add Phone</button>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="card">
-    <div class="card-header">Phone List</div>
+    <div class="card-header">Phones List</div>
     <div class="card-body">
       <table class="table table-bordered" id="phoneTable">
         <thead class="table-light">
@@ -33,17 +33,57 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>1</td>
-          <td>999888777</td>
-          <td>Nokia</td>
-          <td>
-            <button class="btn btn-sm btn-warning">Edit</button>
-            <button class="btn btn-sm btn-danger">Delete</button>
-          </td>
-        </tr>
+          @for (item of phones; track $index){
+            <tr>
+              <td>{{item.phoneId}}</td>
+              <td>{{item.phoneNumber}}</td>
+              <td>{{item.phoneName}}</td>
+              <td>
+                <button class="btn btn-sm btn-warning" (click)="openModal(item)">Edit</button>
+                <button class="btn btn-sm btn-danger" (click)="deletePhone(item.phoneId)">Delete</button>
+                }
         </tbody>
       </table>
+    </div>
+  </div>
+  <div class="modal" #editModal tabindex="-1" aria-labelledby="editPhoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form (ngSubmit)="editPhone()"  #editForm="ngForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editPhoneModalLabel">Edit Person</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)='closeModal()'></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="editPhoneNumber" class="form-label">Phone Number</label>
+              <input
+                type="text"
+                [(ngModel)]="ePhone.phoneNumber"
+                name="ediPhoneNumber"
+                id="editPhoneNumber"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editPhoneName" class="form-label">Phone Name</label>
+              <input
+                type="text"
+                [(ngModel)]="ePhone.phoneName"
+                name="editPhoneName"
+                id="editPhoneName"
+                class="form-control"
+                required
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)='closeModal()'>Cancel</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
