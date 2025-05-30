@@ -8,7 +8,7 @@ import {Phone} from '../models/Phone';
 })
 export class PhoneService {
 
-  private apiUrl = 'https://localhost:5001/api/Phone';
+  private apiUrl = 'http://localhost:5000/api/Phone';
 
   constructor(private http: HttpClient) {}
 
