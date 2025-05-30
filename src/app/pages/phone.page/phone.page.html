@@ -4,16 +4,48 @@
   <div class="card mb-4">
     <div class="card-header">Add New Phone</div>
     <div class="card-body">
-      <form id="createPhoneForm" (ngSubmit)="addPhone()">
+      <form id="createPhoneForm" (ngSubmit)="addPhone()" #createPhoneForm="ngForm">
         <div class="row g-3">
           <div class="col-md-4">
-            <input type="text" [(ngModel)]="phone.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" id="phoneNumber" required>
+            <input
+              type="text"
+              [(ngModel)]="phone.phoneNumber"
+              name="phoneNumber"
+              #phoneNumberModel="ngModel"
+              class="form-control"
+              placeholder="Phone Number"
+              id="phoneNumber"
+              required
+              pattern="^[0-9]{9}$"
+            >
+            <div *ngIf="phoneNumberModel.invalid && phoneNumberModel.touched" class="text-danger mt-1">
+              <small *ngIf="phoneNumberModel.errors?.['required']">Provide phone number (exactly 9 numbers).</small>
+              <small *ngIf="phoneNumberModel.errors?.['pattern']">Phone number must be exactly 9 digits.</small>
+            </div>
           </div>
+
           <div class="col-md-4">
-            <input type="text" [(ngModel)]="phone.phoneName" name="phoneName" class="form-control" placeholder="Phone Number" id="phoneName" required>
+            <input
+              type="text"
+              [(ngModel)]="phone.phoneName"
+              name="phoneName"
+              #phoneNameModel="ngModel"
+              class="form-control"
+              placeholder="Phone Name"
+              id="phoneName"
+              required
+              maxlength="15"
+            >
+            <div *ngIf="phoneNameModel.invalid && phoneNameModel.touched" class="text-danger mt-1">
+              <small *ngIf="phoneNameModel.errors?.['required']">Provide phone name.</small>
+              <small *ngIf="phoneNameModel.errors?.['maxlength']">Phone name can have up to 15 characters.</small>
+            </div>
           </div>
-          <div class="col-md-4">
-            <button type="submit" class="btn btn-primary w-100">Add Phone</button>
+
+          <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="createPhoneForm.invalid">
+              Add Phone
+            </button>
           </div>
         </div>
       </form>
@@ -60,22 +92,34 @@
               <input
                 type="text"
                 [(ngModel)]="ePhone.phoneNumber"
+                #editPhoneNumberModel="ngModel"
                 name="ediPhoneNumber"
                 id="editPhoneNumber"
                 class="form-control"
                 required
+                pattern="^[0-9]{9}$"
               />
+            </div>
+            <div *ngIf="editPhoneNumberModel.invalid && editPhoneNumberModel.touched" class="text-danger mt-1">
+              <small *ngIf="editPhoneNumberModel.errors?.['required']">Provide phone number (exactly 9 numbers).</small>
+              <small *ngIf="editPhoneNumberModel.errors?.['pattern']">Phone number must be exactly 9 digits.</small>
             </div>
             <div class="mb-3">
               <label for="editPhoneName" class="form-label">Phone Name</label>
               <input
                 type="text"
                 [(ngModel)]="ePhone.phoneName"
+                #editPhoneNameModel="ngModel"
                 name="editPhoneName"
                 id="editPhoneName"
                 class="form-control"
                 required
+                maxlength="15"
               />
+            </div>
+            <div *ngIf="editPhoneNameModel.invalid && editPhoneNameModel.touched" class="text-danger mt-1">
+              <small *ngIf="editPhoneNameModel.errors?.['required']">Provide phone name.</small>
+              <small *ngIf="editPhoneNameModel.errors?.['maxlength']">Phone name can have up to 15 characters.</small>
             </div>
           </div>
           <div class="modal-footer">

@@ -2,11 +2,13 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Phone} from '../../models/Phone';
 import {PhoneService} from '../../services/phone.service';
 import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-phone.page',
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './phone.page.html',
   styleUrl: './phone.page.css'
